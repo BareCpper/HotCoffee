@@ -36,26 +36,28 @@ Common_RAM      equ     0x0070                              ; size: 16 bytes
 
         ; code
 
-       org     0                                ; address: 0x0000
+PSECT   resetVec,class=CODE,delta=2
 
-psect	code
-	ORG 00
+org     0x0                                ; address: 0x0000
 vector_reset:                                               ; address: 0x0000
 
-        movlp   0x00
+        ;movlp   0x00
         ljmp    label_004
 
 
+PSECT   interruptVec,class=CODE,delta=2
+global vector_reset
 vector_int:                                                 ; address: 0x0004
 
-        movlp   0x00
+        ;movlp   0x00
         btfsc   T0IF                                ; reg: 0x00b, bit: 2
         btfss   T0IE                                ; reg: 0x00b, bit: 5
         ljmp    label_002
-        movlp   0x07
+        ;movlp   0x07
         fcall    function_018
         retfie
 
+psect	code
 label_002:                                                  ; address: 0x000b
 
         movlb   0x00
@@ -64,7 +66,7 @@ label_002:                                                  ; address: 0x000b
         movlb   0x01
         btfss   CCP2IE                                ; reg: 0x092, bit: 0
         ljmp    label_003
-        movlp   0x1a
+        ;movlp   0x1a
         fcall    function_070
         retfie
 
@@ -76,7 +78,7 @@ label_003:                                                  ; address: 0x0014
         movlb   0x01
         btfss   TMR2IE                                ; reg: 0x091, bit: 1
         ljmp    0x001d
-        movlp   0x23
+        ;movlp   0x23
         fcall    function_088
         retfie
         movlb   0x00
@@ -85,7 +87,7 @@ label_003:                                                  ; address: 0x0014
         movlb   0x01
         btfss   ADIE                                  ; reg: 0x091, bit: 6
         ljmp    0x0026
-        movlp   0x08
+        ;movlp   0x08
         fcall    function_019
         retfie
         movlb   0x00
@@ -94,7 +96,7 @@ label_003:                                                  ; address: 0x0014
         movlb   0x01
         btfss   RCIE                                  ; reg: 0x091, bit: 5
         ljmp    0x002f
-        movlp   0x10
+        ;movlp   0x10
         fcall    function_045
         retfie
         movlb   0x00
@@ -103,14 +105,14 @@ label_003:                                                  ; address: 0x0014
         movlb   0x01
         btfss   TXIE                                  ; reg: 0x091, bit: 4
         retfie
-        movlp   0x10
+        ;movlp   0x10
         fcall    function_044
         retfie
 
 label_004:                                                  ; address: 0x0038
 
         clrf    BSR                                         ; reg: 0x008
-        movlp   0x08
+        ;movlp   0x08
         ljmp    label_209
 
 function_000:                                               ; address: 0x003b
@@ -126,7 +128,7 @@ function_000:                                               ; address: 0x003b
         movlb   0x00
         bcf     0x3e, 0x1                                   ; reg: 0x03e
         fcall    function_040
-        movlp   0x00
+        ;movlp   0x00
         movlb   0x00
         movf    0x4f, W                                     ; reg: 0x04f
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
@@ -250,15 +252,15 @@ label_011:                                                  ; address: 0x00a6
 
 label_012:                                                  ; address: 0x00aa
 
-        movlp   0x26
+        ;movlp   0x26
         fcall    function_096
-        movlp   0x00
+        ;movlp   0x00
         ljmp    label_132
 
 label_013:                                                  ; address: 0x00ae
 
         fcall    function_009
-        movlp   0x00
+        ;movlp   0x00
         ljmp    label_132
 
 label_014:                                                  ; address: 0x00b1
@@ -277,9 +279,9 @@ label_014:                                                  ; address: 0x00b1
 
 label_015:                                                  ; address: 0x00bc
 
-        movlp   0x10
+        ;movlp   0x10
         fcall    function_046
-        movlp   0x00
+        ;movlp   0x00
         movlb   0x03
         movf    0x6d, W                                     ; reg: 0x1ed
         iorwf   0x6c, W                                     ; reg: 0x1ec
@@ -331,7 +333,7 @@ label_018:                                                  ; address: 0x00dc
         ljmp    label_019
         lslf    0x23, W                                     ; reg: 0x023
         fcall    function_013
-        movlp   0x00
+        ;movlp   0x00
         subwf   0x2e, F                                     ; reg: 0x02e
         movf    0x6b, W                                     ; reg: 0x06b
         subwfb  0x2f, F                                     ; reg: 0x02f
@@ -344,7 +346,7 @@ label_019:                                                  ; address: 0x00ed
         ljmp    label_049
         lslf    0x23, W                                     ; reg: 0x023
         fcall    function_013
-        movlp   0x00
+        ;movlp   0x00
         addwf   0x2e, F                                     ; reg: 0x02e
         movf    0x6b, W                                     ; reg: 0x06b
         addwfc  0x2f, F                                     ; reg: 0x02f
@@ -524,12 +526,12 @@ label_032:                                                  ; address: 0x0169
         movf    0x30, W                                     ; reg: 0x030
         movlb   0x02
         movwf   0x21                                        ; reg: 0x121
-        movlp   0x14
+        ;movlp   0x14
         fcall    function_049
-        movlp   0x00
+        ;movlp   0x00
         movlw   0x05
         fcall    function_001
-        movlp   0x00
+        ;movlp   0x00
         ljmp    label_030
 
 label_033:                                                  ; address: 0x0187
@@ -582,12 +584,12 @@ label_037:                                                  ; address: 0x019b
         movwf   0x23                                        ; reg: 0x123
         movlw   0x02
         movwf   0x24                                        ; reg: 0x124
-        movlp   0x14
+        ;movlp   0x14
         fcall    function_049
-        movlp   0x00
+        ;movlp   0x00
         movlw   0x06
         fcall    function_001
-        movlp   0x00
+        ;movlp   0x00
         ljmp    label_030
 
 label_038:                                                  ; address: 0x01b2
@@ -759,7 +761,7 @@ label_052:                                                  ; address: 0x022b
         ljmp    label_054
         movlw   0x98
         fcall    function_017
-        movlp   0x00
+        ;movlp   0x00
 
 label_053:                                                  ; address: 0x0230
 
@@ -880,7 +882,7 @@ label_066:                                                  ; address: 0x0275
         bcf     0x41, 0x4                                   ; reg: 0x041
         movlb   0x01
         fcall    function_012
-        movlp   0x00
+        ;movlp   0x00
         movlw   0x02
         subwf   0x2b, W                                     ; reg: 0x02b
         movlw   0xab
@@ -898,7 +900,7 @@ label_067:                                                  ; address: 0x0287
         ljmp    label_069
         movlb   0x01
         fcall    function_012
-        movlp   0x00
+        ;movlp   0x00
         movf    0x35, W                                     ; reg: 0x035
         iorwf   0x34, W                                     ; reg: 0x034
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
@@ -1100,7 +1102,7 @@ label_086:                                                  ; address: 0x0311
 label_087:                                                  ; address: 0x031a
 
         fcall    function_014
-        movlp   0x00
+        ;movlp   0x00
         movlw   0x5a
 
 label_088:                                                  ; address: 0x031d
@@ -1111,7 +1113,7 @@ label_088:                                                  ; address: 0x031d
 label_089:                                                  ; address: 0x031f
 
         fcall    function_014
-        movlp   0x00
+        ;movlp   0x00
         movlb   0x00
         ljmp    label_094
 
@@ -1226,18 +1228,18 @@ label_101:                                                  ; address: 0x036d
 
         movlw   0x13
         fcall    function_001
-        movlp   0x0f
+        ;movlp   0x0f
         fcall    function_037
-        movlp   0x00
-        movlp   0x14
+        ;movlp   0x00
+        ;movlp   0x14
         fcall    function_048
-        movlp   0x00
+        ;movlp   0x00
         movlb   0x00
         bsf     0x51, 0x4                                   ; reg: 0x051
         fcall    function_005
-        movlp   0x19
+        ;movlp   0x19
         fcall    function_066
-        movlp   0x00
+        ;movlp   0x00
         movlb   0x00
         bsf     0x51, 0x3                                   ; reg: 0x051
         ljmp    label_100
@@ -1312,7 +1314,7 @@ label_110:                                                  ; address: 0x03a0
 label_111:                                                  ; address: 0x03a6
 
         fcall    function_016
-        movlp   0x00
+        ;movlp   0x00
         ljmp    label_053
 
 label_112:                                                  ; address: 0x03a9
@@ -1346,7 +1348,7 @@ label_115:                                                  ; address: 0x03bb
 
         movlw   0x32
         fcall    function_016
-        movlp   0x00
+        ;movlp   0x00
         incf    0x58, F                                     ; reg: 0x058
         ljmp    label_053
 
@@ -1372,7 +1374,7 @@ label_117:                                                  ; address: 0x03ca
         ljmp    label_115
         movlw   0xb6
         fcall    function_017
-        movlp   0x00
+        ;movlp   0x00
 
 label_118:                                                  ; address: 0x03d2
 
@@ -1567,26 +1569,26 @@ label_132:                                                  ; address: 0x0462
         ljmp    label_133
         bcf     0x3e, 0x1                                   ; reg: 0x03e
         fcall    function_015
-        movlp   0x00
+        ;movlp   0x00
 
 label_133:                                                  ; address: 0x0468
 
         movlb   0x00
         clrf    0x43                                        ; reg: 0x043
         fcall    function_007
-        movlp   0x1c
+        ;movlp   0x1c
         fcall    function_075
-        movlp   0x00
+        ;movlp   0x00
         fcall    function_002
-        movlp   0x00
+        ;movlp   0x00
         fcall    function_003
-        movlp   0x00
+        ;movlp   0x00
         fcall    function_004
-        movlp   0x00
+        ;movlp   0x00
         fcall    function_006
-        movlp   0x00
+        ;movlp   0x00
         fcall    function_008
-        movlp   0x00
+        ;movlp   0x00
         movlb   0x00
         btfss   0x3a, 0x3                                   ; reg: 0x03a
         ljmp    label_134
@@ -1722,7 +1724,7 @@ label_145:                                                  ; address: 0x04d0
 label_146:                                                  ; address: 0x04d4
 
         fcall    function_010
-        movlp   0x00
+        ;movlp   0x00
         xorlw   0x08
         btfsc   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_139
@@ -1742,7 +1744,7 @@ label_146:                                                  ; address: 0x04d4
 label_147:                                                  ; address: 0x04e5
 
         fcall    function_010
-        movlp   0x00
+        ;movlp   0x00
         xorlw   0x0d
         btfsc   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_145
@@ -1762,7 +1764,7 @@ label_147:                                                  ; address: 0x04e5
 label_148:                                                  ; address: 0x04f6
 
         fcall    function_010
-        movlp   0x00
+        ;movlp   0x00
         xorlw   0x10
         btfsc   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_143
@@ -2797,9 +2799,9 @@ label_209:                                                  ; address: 0x080c
         movlw   0x00
         movwf   FSR0H                                       ; reg: 0x005
         movlw   0x3d
-        movlp   0x10
+        ;movlp   0x10
         fcall    function_043
-        movlp   0x08
+        ;movlp   0x08
 
 label_210:                                                  ; address: 0x0818
 
@@ -2808,9 +2810,9 @@ label_210:                                                  ; address: 0x0818
         movlw   0x00
         movwf   FSR0H                                       ; reg: 0x005
         movlw   0x4f
-        movlp   0x10
+        ;movlp   0x10
         fcall    function_043
-        movlp   0x08
+        ;movlp   0x08
         movlw   0x20
 
 label_211:                                                  ; address: 0x0821
@@ -2819,9 +2821,9 @@ label_211:                                                  ; address: 0x0821
         movlw   0x01
         movwf   FSR0H                                       ; reg: 0x005
         movlw   0x4d
-        movlp   0x10
+        ;movlp   0x10
         fcall    function_043
-        movlp   0x08
+        ;movlp   0x08
 
 label_212:                                                  ; address: 0x0828
 
@@ -2830,17 +2832,17 @@ label_212:                                                  ; address: 0x0828
         movlw   0x01
         movwf   FSR0H                                       ; reg: 0x005
         movlw   0x4c
-        movlp   0x10
+        ;movlp   0x10
         fcall    function_043
-        movlp   0x08
+        ;movlp   0x08
         movlw   0x20
         movwf   FSR0L                                       ; reg: 0x004
         movlw   0x02
         movwf   FSR0H                                       ; reg: 0x005
         movlw   0x0e
-        movlp   0x10
+        ;movlp   0x10
         fcall    function_043
-        movlp   0x08
+        ;movlp   0x08
         movlb   0x01
         movlw   0x02
         movwf   0x6f                                        ; reg: 0x0ef
@@ -2865,32 +2867,32 @@ label_214:                                                  ; address: 0x0847
         bcf     GIE                                 ; reg: 0x00b, bit: 7
         clrwdt
         fcall    function_021
-        movlp   0x08
+        ;movlp   0x08
         clrwdt
         fcall    function_022
 
 label_215:                                                  ; address: 0x084d
 
-        movlp   0x08
+        ;movlp   0x08
         clrwdt
 
 label_216:                                                  ; address: 0x084f
 
         fcall    function_032
-        movlp   0x08
+        ;movlp   0x08
         clrwdt
         fcall    function_023
-        movlp   0x08
+        ;movlp   0x08
         clrwdt
         fcall    function_024
-        movlp   0x08
+        ;movlp   0x08
         clrwdt
         clrwdt
         fcall    function_025
         clrwdt
-        movlp   0x18
+        ;movlp   0x18
         fcall    function_062
-        movlp   0x08
+        ;movlp   0x08
         clrwdt
         fcall    function_026
         clrwdt
@@ -2900,28 +2902,28 @@ label_216:                                                  ; address: 0x084f
 label_217:                                                  ; address: 0x0863
 
         clrwdt
-        movlp   0x18
+        ;movlp   0x18
         fcall    function_063
-        movlp   0x08
+        ;movlp   0x08
 
 label_218:                                                  ; address: 0x0867
 
         clrwdt
         fcall    function_027
         clrwdt
-        movlp   0x25
+        ;movlp   0x25
         fcall    function_089
 
 label_219:                                                  ; address: 0x086c
 
-        movlp   0x08
+        ;movlp   0x08
         clrwdt
-        movlp   0x14
+        ;movlp   0x14
         fcall    function_051
 
 label_220:                                                  ; address: 0x0870
 
-        movlp   0x08
+        ;movlp   0x08
         clrwdt
         movlb   0x00
         btfss   0x39, 0x2                                   ; reg: 0x039
@@ -2929,24 +2931,24 @@ label_220:                                                  ; address: 0x0870
         clrwdt
         fcall    function_020
         clrwdt
-        movlp   0x00
+        ;movlp   0x00
         fcall    function_000
-        movlp   0x08
+        ;movlp   0x08
         clrwdt
         fcall    function_029
 
 label_221:                                                  ; address: 0x087d
 
         clrwdt
-        movlp   0x19
+        ;movlp   0x19
         fcall    function_064
-        movlp   0x08
+        ;movlp   0x08
         clrwdt
         fcall    function_028
 
 label_222:                                                  ; address: 0x0883
 
-        movlp   0x08
+        ;movlp   0x08
         clrwdt
         ljmp    label_217
 
@@ -4123,7 +4125,7 @@ function_029:                                               ; address: 0x0bfa
 label_306:                                                  ; address: 0x0c01
 
         fcall    function_030
-        movlp   0x08
+        ;movlp   0x08
         ljmp    label_383
 
 label_307:                                                  ; address: 0x0c04
@@ -4205,7 +4207,7 @@ label_314:                                                  ; address: 0x0c37
         btfsc   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_382
         fcall    function_031
-        movlp   0x08
+        ;movlp   0x08
         ljmp    label_383
 
 label_315:                                                  ; address: 0x0c3e
@@ -5025,21 +5027,21 @@ label_395:                                                  ; address: 0x0e72
 
         clrwdt
         fcall    function_042
-        movlp   0x08
+        ;movlp   0x08
 
 label_396:                                                  ; address: 0x0e75
 
         fcall    function_041
-        movlp   0x08
+        ;movlp   0x08
         movlw   0x06
         movwf   (Common_RAM + 4)                            ; reg: 0x074
         movf    0x48, W                                     ; reg: 0x048
         fcall    function_035
-        movlp   0x08
+        ;movlp   0x08
         addwf   0x64, W                                     ; reg: 0x064
         addlw   0x50
         fcall    function_033
-        movlp   0x08
+        ;movlp   0x08
         movwf   INDF1                                       ; reg: 0x001
         movlb   0x00
         incf    0x64, F                                     ; reg: 0x064
@@ -5051,7 +5053,7 @@ label_396:                                                  ; address: 0x0e75
         movwf   (Common_RAM + 4)                            ; reg: 0x074
         movlw   0xd3
         fcall    function_034
-        movlp   0x08
+        ;movlp   0x08
         movlb   0x03
         movf    0x57, W                                     ; reg: 0x1d7
         movlb   0x00
@@ -5083,13 +5085,13 @@ label_398:                                                  ; address: 0x0ea1
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_399
         fcall    function_036
-        movlp   0x08
+        ;movlp   0x08
         ljmp    label_400
 
 label_399:                                                  ; address: 0x0ea7
 
         fcall    function_037
-        movlp   0x08
+        ;movlp   0x08
 
 label_400:                                                  ; address: 0x0ea9
 
@@ -5099,21 +5101,21 @@ label_401:                                                  ; address: 0x0eaa
 
         clrwdt
         fcall    function_042
-        movlp   0x08
+        ;movlp   0x08
 
 label_402:                                                  ; address: 0x0ead
 
         fcall    function_041
-        movlp   0x08
+        ;movlp   0x08
         movlw   0x19
         movwf   (Common_RAM + 4)                            ; reg: 0x074
         movf    0x48, W                                     ; reg: 0x048
         fcall    function_035
-        movlp   0x08
+        ;movlp   0x08
         addwf   0x64, W                                     ; reg: 0x064
         addlw   0x1e
         fcall    function_033
-        movlp   0x08
+        ;movlp   0x08
         movwf   INDF1                                       ; reg: 0x001
         movlb   0x00
         incf    0x64, F                                     ; reg: 0x064
@@ -5125,7 +5127,7 @@ label_402:                                                  ; address: 0x0ead
         movwf   (Common_RAM + 4)                            ; reg: 0x074
         movlw   0xd3
         fcall    function_034
-        movlp   0x08
+        ;movlp   0x08
         movlb   0x03
         movf    0x6a, W                                     ; reg: 0x1ea
         movlb   0x00
@@ -5156,15 +5158,15 @@ label_404:                                                  ; address: 0x0ed9
         movf    0x63, F                                     ; reg: 0x063
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_405
-        movlp   0x23
+        ;movlp   0x23
         fcall    function_087
-        movlp   0x08
+        ;movlp   0x08
         ljmp    label_406
 
 label_405:                                                  ; address: 0x0ee0
 
         fcall    function_038
-        movlp   0x08
+        ;movlp   0x08
 
 label_406:                                                  ; address: 0x0ee2
 
@@ -5175,20 +5177,20 @@ label_407:                                                  ; address: 0x0ee4
 
         clrwdt
         fcall    function_042
-        movlp   0x08
+        ;movlp   0x08
 
 label_408:                                                  ; address: 0x0ee7
 
         fcall    function_041
-        movlp   0x08
+        ;movlp   0x08
         movlw   0x0f
         movwf   (Common_RAM + 4)                            ; reg: 0x074
         movf    0x48, W                                     ; reg: 0x048
         fcall    function_035
-        movlp   0x08
+        ;movlp   0x08
         addwf   0x64, W                                     ; reg: 0x064
         fcall    function_033
-        movlp   0x08
+        ;movlp   0x08
         movwf   INDF1                                       ; reg: 0x001
         movlb   0x00
         incf    0x64, F                                     ; reg: 0x064
@@ -5200,7 +5202,7 @@ label_408:                                                  ; address: 0x0ee7
         movwf   (Common_RAM + 4)                            ; reg: 0x074
         movlw   0xd3
         fcall    function_034
-        movlp   0x08
+        ;movlp   0x08
         movlb   0x03
         movf    0x60, W                                     ; reg: 0x1e0
         movlb   0x00
@@ -5232,14 +5234,14 @@ label_410:                                                  ; address: 0x0f12
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_411
         fcall    function_039
-        movlp   0x08
+        ;movlp   0x08
         ljmp    label_412
 
 label_411:                                                  ; address: 0x0f18
 
-        movlp   0x06
+        ;movlp   0x06
         fcall    function_005
-        movlp   0x08
+        ;movlp   0x08
 
 label_412:                                                  ; address: 0x0f1b
 
@@ -5257,7 +5259,7 @@ label_413:                                                  ; address: 0x0f1e
         movf    0x64, W                                     ; reg: 0x064
         addlw   0xf6
         fcall    function_033
-        movlp   0x08
+        ;movlp   0x08
         movwf   INDF1                                       ; reg: 0x001
         movlb   0x00
         incf    0x64, F                                     ; reg: 0x064
@@ -5526,7 +5528,6 @@ function_042:                                               ; address: 0x0ffb
         movwf   0x63                                        ; reg: 0x063
         clrf    0x64                                        ; reg: 0x064
         return
-        movwi   -1[FSR1]
 
 function_043:                                               ; address: 0x1001
 
@@ -5944,13 +5945,13 @@ function_047:                                               ; address: 0x110b
         movlw   0x02
         movwf   0x20                                        ; reg: 0x020
         movlw   0x11
-        movlp   0x04
+        ;movlp   0x04
         fcall    function_001
-        movlp   0x10
+        ;movlp   0x10
         movlb   0x00
         incf    0x4d, F                                     ; reg: 0x04d
         fcall    function_048
-        movlp   0x10
+        ;movlp   0x10
         movlb   0x00
         bsf     0x51, 0x4                                   ; reg: 0x051
         movf    0x4f, W                                     ; reg: 0x04f
@@ -5999,16 +6000,16 @@ label_431:                                                  ; address: 0x119f
 label_432:                                                  ; address: 0x11a5
 
         movlw   0x12
-        movlp   0x04
+        ;movlp   0x04
         fcall    function_001
-        movlp   0x10
+        ;movlp   0x10
         movlb   0x00
         incf    0x4d, F                                     ; reg: 0x04d
 
 label_433:                                                  ; address: 0x11ab
 
         fcall    function_048
-        movlp   0x10
+        ;movlp   0x10
         movlb   0x00
         bsf     0x51, 0x4                                   ; reg: 0x051
 
@@ -6060,16 +6061,16 @@ label_437:                                                  ; address: 0x11ca
 label_438:                                                  ; address: 0x11d0
 
         movlw   0x10
-        movlp   0x04
+        ;movlp   0x04
         fcall    function_001
-        movlp   0x10
+        ;movlp   0x10
         movlb   0x00
         incf    0x4d, F                                     ; reg: 0x04d
 
 label_439:                                                  ; address: 0x11d6
 
         fcall    function_048
-        movlp   0x10
+        ;movlp   0x10
         movlb   0x00
         bsf     0x51, 0x4                                   ; reg: 0x051
 
@@ -6281,7 +6282,7 @@ label_458:                                                  ; address: 0x126b
         ljmp    label_471
         bcf     0x3c, 0x7                                   ; reg: 0x03c
         fcall    function_049
-        movlp   0x10
+        ;movlp   0x10
         movf    0x37, F                                     ; reg: 0x037
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_462
@@ -6327,9 +6328,9 @@ label_460:                                                  ; address: 0x128f
 label_461:                                                  ; address: 0x1296
 
         movlw   0x05
-        movlp   0x04
+        ;movlp   0x04
         fcall    function_001
-        movlp   0x10
+        ;movlp   0x10
         ljmp    label_471
 
 label_462:                                                  ; address: 0x129b
@@ -6378,9 +6379,9 @@ label_464:                                                  ; address: 0x12b6
 label_465:                                                  ; address: 0x12bd
 
         movlw   0x06
-        movlp   0x04
+        ;movlp   0x04
         fcall    function_001
-        movlp   0x10
+        ;movlp   0x10
         ljmp    label_471
 
 label_466:                                                  ; address: 0x12c2
@@ -6892,10 +6893,10 @@ label_507:                                                  ; address: 0x1425
         movlb   0x03
         movf    0x21, W                                     ; reg: 0x1a1
         fcall    function_052
-        movlp   0x14
+        ;movlp   0x14
         movwf   (Common_RAM + 4)                            ; reg: 0x074
         fcall    function_060
-        movlp   0x14
+        ;movlp   0x14
         movf    (Common_RAM + 4), W                         ; reg: 0x074
         movwf   INDF1                                       ; reg: 0x001
         ljmp    label_568
@@ -6908,10 +6909,10 @@ function_051:                                               ; address: 0x1440
         movlb   0x03
         movf    0x21, W                                     ; reg: 0x1a1
         fcall    function_052
-        movlp   0x14
+        ;movlp   0x14
         movwf   0x6b                                        ; reg: 0x06b
         fcall    function_060
-        movlp   0x14
+        ;movlp   0x14
         movf    INDF1, W                                    ; reg: 0x001
         movlb   0x00
         xorwf   0x6b, W                                     ; reg: 0x06b
@@ -6938,7 +6939,7 @@ label_508:                                                  ; address: 0x1454
 label_509:                                                  ; address: 0x145d
 
         fcall    function_053
-        movlp   0x14
+        ;movlp   0x14
         ljmp    label_519
 
 label_510:                                                  ; address: 0x1460
@@ -6956,7 +6957,7 @@ label_510:                                                  ; address: 0x1460
 label_511:                                                  ; address: 0x1469
 
         fcall    function_055
-        movlp   0x14
+        ;movlp   0x14
         ljmp    label_519
 
 label_512:                                                  ; address: 0x146c
@@ -7040,7 +7041,7 @@ label_514:                                                  ; address: 0x14a4
 label_515:                                                  ; address: 0x14b1
 
         fcall    function_056
-        movlp   0x14
+        ;movlp   0x14
         ljmp    label_519
 
 label_516:                                                  ; address: 0x14b4
@@ -7055,7 +7056,7 @@ label_516:                                                  ; address: 0x14b4
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_519
         fcall    function_058
-        movlp   0x14
+        ;movlp   0x14
         ljmp    label_519
 
 label_517:                                                  ; address: 0x14c0
@@ -7070,7 +7071,7 @@ label_517:                                                  ; address: 0x14c0
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_519
         fcall    function_050
-        movlp   0x14
+        ;movlp   0x14
         ljmp    label_519
 
 label_518:                                                  ; address: 0x14cc
@@ -7149,7 +7150,7 @@ function_053:                                               ; address: 0x14fc
         movlw   0x0f
         movwf   0x23                                        ; reg: 0x1a3
         fcall    function_054
-        movlp   0x14
+        ;movlp   0x14
         movf    0x4c, W                                     ; reg: 0x04c
         movlb   0x03
         movwf   0x24                                        ; reg: 0x1a4
@@ -7220,7 +7221,7 @@ function_053:                                               ; address: 0x14fc
         movwf   0x32                                        ; reg: 0x1b2
         movf    0x21, W                                     ; reg: 0x1a1
         fcall    function_052
-        movlp   0x14
+        ;movlp   0x14
         movlb   0x03
         movwf   0x33                                        ; reg: 0x1b3
         ljmp    label_568
@@ -7314,7 +7315,7 @@ function_055:                                               ; address: 0x155f
         movwf   0x2f                                        ; reg: 0x1af
         movf    0x21, W                                     ; reg: 0x1a1
         fcall    function_052
-        movlp   0x14
+        ;movlp   0x14
         movlb   0x03
         movwf   0x30                                        ; reg: 0x1b0
         ljmp    label_568
@@ -7326,7 +7327,7 @@ function_056:                                               ; address: 0x15aa
         movlb   0x00
         movwf   0x65                                        ; reg: 0x065
         fcall    function_061
-        movlp   0x14
+        ;movlp   0x14
         movlw   0xa0
         movwf   0x20                                        ; reg: 0x020
         movlw   0x06
@@ -7356,7 +7357,7 @@ label_522:                                                  ; address: 0x15ba
         movf    (Common_RAM + 7), W                         ; reg: 0x077
         addwfc  0x5e, F                                     ; reg: 0x05e
         fcall    function_057
-        movlp   0x14
+        ;movlp   0x14
         movf    0x60, W                                     ; reg: 0x060
         movwf   0x69                                        ; reg: 0x069
         movf    0x5f, W                                     ; reg: 0x05f
@@ -7403,10 +7404,10 @@ label_523:                                                  ; address: 0x15f3
         movlb   0x03
         movf    0x21, W                                     ; reg: 0x1a1
         fcall    function_052
-        movlp   0x14
+        ;movlp   0x14
         movwf   (Common_RAM + 4)                            ; reg: 0x074
         fcall    function_060
-        movlp   0x14
+        ;movlp   0x14
         movf    (Common_RAM + 4), W                         ; reg: 0x074
         movwf   INDF1                                       ; reg: 0x001
         ljmp    label_568
@@ -7786,7 +7787,7 @@ label_553:                                                  ; address: 0x170b
 function_058:                                               ; address: 0x1714
 
         fcall    function_061
-        movlp   0x14
+        ;movlp   0x14
         movf    0x26, W                                     ; reg: 0x026
         movlb   0x00
         movwf   0x66                                        ; reg: 0x066
@@ -7825,7 +7826,7 @@ function_058:                                               ; address: 0x1714
         movf    0x63, W                                     ; reg: 0x063
         movwf   0x5f                                        ; reg: 0x05f
         fcall    function_059
-        movlp   0x14
+        ;movlp   0x14
         iorlw   0x00
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_554
@@ -7843,10 +7844,10 @@ label_555:                                                  ; address: 0x1746
 
         movf    0x21, W                                     ; reg: 0x021
         fcall    function_052
-        movlp   0x14
+        ;movlp   0x14
         movwf   (Common_RAM + 5)                            ; reg: 0x075
         fcall    function_060
-        movlp   0x14
+        ;movlp   0x14
         movf    (Common_RAM + 5), W                         ; reg: 0x075
         movwf   INDF1                                       ; reg: 0x001
         ljmp    label_568
@@ -8203,7 +8204,7 @@ function_063:                                               ; address: 0x1825
         movlb   0x01
         movf    0x4c, W                                     ; reg: 0x0cc
         fcall    function_047
-        movlp   0x18
+        ;movlp   0x18
         movwf   (Common_RAM + 5)                            ; reg: 0x075
         btfsc   (Common_RAM + 5), 0x1                       ; reg: 0x075
         bsf     0x3b, 0x3                                   ; reg: 0x03b
@@ -8432,15 +8433,15 @@ function_064:                                               ; address: 0x1924
         bcf     0x51, 0x4                                   ; reg: 0x051
         clrf    0x46                                        ; reg: 0x046
         clrf    0x48                                        ; reg: 0x048
-        movlp   0x14
+        ;movlp   0x14
         fcall    function_048
-        movlp   0x19
+        ;movlp   0x19
         movlw   0x04
         movwf   (Common_RAM + 4)                            ; reg: 0x074
         movlw   0xd3
-        movlp   0x0f
+        ;movlp   0x0f
         fcall    function_034
-        movlp   0x19
+        ;movlp   0x19
         movlb   0x00
         movf    0x29, W                                     ; reg: 0x029
         movlb   0x03
@@ -8461,15 +8462,15 @@ label_584:                                                  ; address: 0x1940
         movlw   0x06
         movwf   (Common_RAM + 4)                            ; reg: 0x074
         movf    0x48, W                                     ; reg: 0x048
-        movlp   0x0f
+        ;movlp   0x0f
         fcall    function_035
-        movlp   0x19
+        ;movlp   0x19
         addwf   0x46, W                                     ; reg: 0x046
         addlw   0x50
         fcall    function_069
-        movlp   0x19
+        ;movlp   0x19
         fcall    function_065
-        movlp   0x19
+        ;movlp   0x19
         movlw   0x03
         movlb   0x00
         movwf   0x56                                        ; reg: 0x056
@@ -8506,9 +8507,9 @@ label_586:                                                  ; address: 0x1962
         movlw   0x0d
         movwf   (Common_RAM + 4)                            ; reg: 0x074
         movlw   0xd3
-        movlp   0x0f
+        ;movlp   0x0f
         fcall    function_034
-        movlp   0x19
+        ;movlp   0x19
         movlb   0x00
         movf    0x29, W                                     ; reg: 0x029
         movlb   0x03
@@ -8529,14 +8530,14 @@ label_587:                                                  ; address: 0x197b
         movlw   0x0f
         movwf   (Common_RAM + 4)                            ; reg: 0x074
         movf    0x48, W                                     ; reg: 0x048
-        movlp   0x0f
+        ;movlp   0x0f
         fcall    function_035
-        movlp   0x19
+        ;movlp   0x19
         addwf   0x46, W                                     ; reg: 0x046
         fcall    function_069
-        movlp   0x19
+        ;movlp   0x19
         fcall    function_065
-        movlp   0x19
+        ;movlp   0x19
         movlw   0x03
         movlb   0x00
         movwf   0x56                                        ; reg: 0x056
@@ -8573,9 +8574,9 @@ label_589:                                                  ; address: 0x199c
         movlw   0x17
         movwf   (Common_RAM + 4)                            ; reg: 0x074
         movlw   0xd3
-        movlp   0x0f
+        ;movlp   0x0f
         fcall    function_034
-        movlp   0x19
+        ;movlp   0x19
         movlb   0x00
         movf    0x29, W                                     ; reg: 0x029
         movlb   0x03
@@ -8596,15 +8597,15 @@ label_590:                                                  ; address: 0x19b5
         movlw   0x19
         movwf   (Common_RAM + 4)                            ; reg: 0x074
         movf    0x48, W                                     ; reg: 0x048
-        movlp   0x0f
+        ;movlp   0x0f
         fcall    function_035
-        movlp   0x19
+        ;movlp   0x19
         addwf   0x46, W                                     ; reg: 0x046
         addlw   0x1e
         fcall    function_069
-        movlp   0x19
+        ;movlp   0x19
         fcall    function_065
-        movlp   0x19
+        ;movlp   0x19
         movlw   0x03
         movlb   0x00
         movwf   0x56                                        ; reg: 0x056
@@ -8768,7 +8769,7 @@ function_067:                                               ; address: 0x1a37
         movwf   FSR1L                                       ; reg: 0x006
         clrf    FSR1H                                       ; reg: 0x007
         fcall    function_068
-        movlp   0x19
+        ;movlp   0x19
         movwf   0x57                                        ; reg: 0x057
         movlb   0x00
         movf    0x26, W                                     ; reg: 0x026
@@ -8790,7 +8791,7 @@ function_067:                                               ; address: 0x1a37
         addlw   0xa0
         movwf   FSR1L                                       ; reg: 0x006
         fcall    function_068
-        movlp   0x19
+        ;movlp   0x19
         movwf   0x5e                                        ; reg: 0x05e
         movlb   0x00
         movf    0x26, W                                     ; reg: 0x026
@@ -8808,7 +8809,7 @@ function_067:                                               ; address: 0x1a37
         addlw   0xa0
         movwf   FSR1L                                       ; reg: 0x006
         fcall    function_068
-        movlp   0x19
+        ;movlp   0x19
         movwf   0x62                                        ; reg: 0x062
         movlb   0x00
         movf    0x26, W                                     ; reg: 0x026
@@ -9001,7 +9002,7 @@ label_598:                                                  ; address: 0x1b08
         btfss   STATUS, 0x0                                   ; reg: 0x003, bit: 0
         ljmp    label_600
         fcall    function_071
-        movlp   0x1a
+        ;movlp   0x1a
         ljmp    label_600
 
 label_599:                                                  ; address: 0x1b2b
@@ -9014,7 +9015,7 @@ label_599:                                                  ; address: 0x1b2b
         btfss   STATUS, 0x0                                   ; reg: 0x003, bit: 0
         ljmp    label_600
         fcall    function_072
-        movlp   0x1a
+        ;movlp   0x1a
 
 label_600:                                                  ; address: 0x1b34
 
@@ -9025,7 +9026,7 @@ label_600:                                                  ; address: 0x1b34
         btfss   STATUS, 0x0                                   ; reg: 0x003, bit: 0
         ljmp    label_650
         fcall    function_071
-        movlp   0x1a
+        ;movlp   0x1a
         ljmp    label_650
 
 label_601:                                                  ; address: 0x1b3d
@@ -9078,7 +9079,7 @@ label_603:                                                  ; address: 0x1b5c
         ljmp    label_606
         bcf     0x3f, 0x4                                   ; reg: 0x03f
         fcall    function_073
-        movlp   0x1a
+        ;movlp   0x1a
         ljmp    label_605
 
 label_604:                                                  ; address: 0x1b69
@@ -9103,7 +9104,7 @@ label_606:                                                  ; address: 0x1b6d
         movlb   0x02
         movwf   0x55                                        ; reg: 0x155
         fcall    function_074
-        movlp   0x1a
+        ;movlp   0x1a
 
 label_607:                                                  ; address: 0x1b78
 
@@ -9191,7 +9192,7 @@ label_616:                                                  ; address: 0x1bac
         clrf    0x47                                        ; reg: 0x047
         clrf    0x48                                        ; reg: 0x048
         fcall    function_074
-        movlp   0x1a
+        ;movlp   0x1a
 
 label_617:                                                  ; address: 0x1bb2
 
@@ -9263,7 +9264,7 @@ label_626:                                                  ; address: 0x1bd5
 label_627:                                                  ; address: 0x1bd7
 
         fcall    function_073
-        movlp   0x1a
+        ;movlp   0x1a
 
 label_628:                                                  ; address: 0x1bd9
 
@@ -9620,13 +9621,13 @@ label_669:                                                  ; address: 0x1c9e
         movf    0x2e, W                                     ; reg: 0x02e
         addlw   0x2e
         fcall    function_080
-        movlp   0x1c
+        ;movlp   0x1c
         movf    0x2e, W                                     ; reg: 0x02e
         btfss   STATUS, 0x0                                   ; reg: 0x003, bit: 0
         ljmp    label_730
         addlw   0xda
         fcall    function_081
-        movlp   0x1c
+        ;movlp   0x1c
 
 label_670:                                                  ; address: 0x1cb7
 
@@ -9637,9 +9638,9 @@ label_670:                                                  ; address: 0x1cb7
 
 label_671:                                                  ; address: 0x1cbb
 
-        movlp   0x1c
+        ;movlp   0x1c
         fcall    function_084
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
 
 label_672:                                                  ; address: 0x1cbf
@@ -9663,7 +9664,7 @@ label_675:                                                  ; address: 0x1cc4
 
 label_676:                                                  ; address: 0x1cc6
 
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_677
         movlw   0x04
@@ -9683,13 +9684,13 @@ label_678:                                                  ; address: 0x1ccd
 
 label_679:                                                  ; address: 0x1cd1
 
-        movlp   0x1c
+        ;movlp   0x1c
         btfsc   STATUS, 0x0                                   ; reg: 0x003, bit: 0
         ljmp    label_714
         movf    0x2e, W                                     ; reg: 0x02e
         addlw   0xf1
         fcall    function_081
-        movlp   0x1c
+        ;movlp   0x1c
         btfsc   STATUS, 0x0                                   ; reg: 0x003, bit: 0
         ljmp    label_714
         movlb   0x01
@@ -9707,7 +9708,7 @@ label_681:                                                  ; address: 0x1cdf
         movwf   0x44                                        ; reg: 0x0c4
         movlb   0x00
         fcall    function_079
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_683
         movlw   0x01
@@ -9725,7 +9726,7 @@ label_683:                                                  ; address: 0x1ce8
 
 label_684:                                                  ; address: 0x1cec
 
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_685
         movlw   0x03
@@ -9757,7 +9758,7 @@ label_689:                                                  ; address: 0x1cfb
 
         movlb   0x00
         fcall    function_079
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_690
         movlw   0x05
@@ -9799,7 +9800,7 @@ label_693:                                                  ; address: 0x1d19
 
         movlb   0x00
         fcall    function_082
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_694
         movlw   0x10
@@ -9827,7 +9828,7 @@ label_696:                                                  ; address: 0x1d2c
 
         movlb   0x00
         fcall    function_084
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_697
         movlw   0xfe
@@ -9850,7 +9851,7 @@ label_698:                                                  ; address: 0x1d3d
 
         movlb   0x00
         fcall    function_084
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_699
         movlw   0xfc
@@ -9886,7 +9887,7 @@ label_702:                                                  ; address: 0x1d55
 
         movlb   0x00
         fcall    function_082
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_703
         movlw   0x01
@@ -9967,7 +9968,7 @@ label_714:                                                  ; address: 0x1d79
         movwf   0x4d                                        ; reg: 0x04d
         movlb   0x00
         fcall    function_082
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_715
         movlw   0x07
@@ -10019,7 +10020,7 @@ label_720:                                                  ; address: 0x1da0
 label_721:                                                  ; address: 0x1da2
 
         fcall    function_086
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_722
         movlw   0x01
@@ -10031,7 +10032,7 @@ label_722:                                                  ; address: 0x1da8
         ljmp    label_724
         movlb   0x01
         fcall    function_086
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_723
         movlw   0x0f
@@ -10098,7 +10099,7 @@ label_730:                                                  ; address: 0x1dd5
 
         addlw   0x2e
         fcall    function_080
-        movlp   0x1c
+        ;movlp   0x1c
         btfsc   STATUS, 0x0                                   ; reg: 0x003, bit: 0
         ljmp    label_731
         bsf     0x43, 0x0                                   ; reg: 0x043
@@ -10112,7 +10113,7 @@ label_731:                                                  ; address: 0x1ddf
         movf    0x2e, W                                     ; reg: 0x02e
         addlw   0xda
         fcall    function_081
-        movlp   0x1c
+        ;movlp   0x1c
         btfsc   STATUS, 0x0                                   ; reg: 0x003, bit: 0
         ljmp    label_661
         bsf     0x43, 0x0                                   ; reg: 0x043
@@ -10128,7 +10129,7 @@ label_732:                                                  ; address: 0x1de7
 label_733:                                                  ; address: 0x1deb
 
         fcall    function_077
-        movlp   0x1c
+        ;movlp   0x1c
         xorlw   0x00
         btfsc   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_734
@@ -10145,7 +10146,7 @@ label_734:                                                  ; address: 0x1df2
 label_735:                                                  ; address: 0x1df6
 
         fcall    function_083
-        movlp   0x1c
+        ;movlp   0x1c
         movf    0x5b, W                                     ; reg: 0x05b
         btfsc   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_736
@@ -10206,7 +10207,7 @@ label_742:                                                  ; address: 0x1e1a
         movwf   FSR0L                                       ; reg: 0x004
         movlw   0xa9
         fcall    function_078
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS, 0x0                                   ; reg: 0x003, bit: 0
         ljmp    label_743
         incf    0x61, F                                     ; reg: 0x061
@@ -10290,7 +10291,7 @@ label_750:                                                  ; address: 0x1e54
 label_751:                                                  ; address: 0x1e57
 
         fcall    function_082
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_752
         movlw   0x74
@@ -10317,7 +10318,7 @@ label_754:                                                  ; address: 0x1e65
         movwf   FSR0L                                       ; reg: 0x004
         movlw   0xa8
         fcall    function_078
-        movlp   0x1c
+        ;movlp   0x1c
 
 function_076:                                               ; address: 0x1e6b
 
@@ -10329,7 +10330,7 @@ function_076:                                               ; address: 0x1e6b
 label_755:                                                  ; address: 0x1e6f
 
         fcall    function_079
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_756
         movlw   0x21
@@ -10350,7 +10351,7 @@ label_758:                                                  ; address: 0x1e7a
 
         movlb   0x00
         fcall    function_079
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_759
         movlw   0x19
@@ -10362,7 +10363,7 @@ label_759:                                                  ; address: 0x1e81
         ljmp    label_761
         movlb   0x00
         fcall    function_079
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_760
         movlw   0x21
@@ -10383,7 +10384,7 @@ label_761:                                                  ; address: 0x1e92
 
         movlb   0x00
         fcall    function_079
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_762
         movlw   0x10
@@ -10395,7 +10396,7 @@ label_762:                                                  ; address: 0x1e99
         ljmp    label_764
         movlb   0x00
         fcall    function_079
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_763
         movlw   0x19
@@ -10410,7 +10411,7 @@ label_764:                                                  ; address: 0x1ea4
 
         movlb   0x00
         fcall    function_079
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_765
         movlw   0x10
@@ -10467,7 +10468,7 @@ label_769:                                                  ; address: 0x1ecb
         movwf   FSR0L                                       ; reg: 0x004
         movlw   0xa8
         fcall    function_078
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS, 0x0                                   ; reg: 0x003, bit: 0
         ljmp    label_770
         incf    0x61, F                                     ; reg: 0x061
@@ -10476,7 +10477,7 @@ label_769:                                                  ; address: 0x1ecb
 label_770:                                                  ; address: 0x1ed5
 
         fcall    function_079
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_771
         movlw   0x05
@@ -10497,7 +10498,7 @@ label_772:                                                  ; address: 0x1ee3
 
         movlb   0x00
         fcall    function_085
-        movlp   0x1c
+        ;movlp   0x1c
         btfsc   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         incf    0x46, F                                     ; reg: 0x046
         ljmp    label_748
@@ -10505,7 +10506,7 @@ label_772:                                                  ; address: 0x1ee3
 label_773:                                                  ; address: 0x1ee9
 
         fcall    function_079
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_774
         movlw   0x03
@@ -10598,7 +10599,7 @@ label_782:                                                  ; address: 0x1f27
         movwf   FSR0L                                       ; reg: 0x004
         movlw   0xa8
         fcall    function_078
-        movlp   0x1c
+        ;movlp   0x1c
         btfss   STATUS, 0x0                                   ; reg: 0x003, bit: 0
         ljmp    label_783
         incf    0x61, F                                     ; reg: 0x061
@@ -10607,7 +10608,7 @@ label_782:                                                  ; address: 0x1f27
 label_783:                                                  ; address: 0x1f31
 
         fcall    function_085
-        movlp   0x1c
+        ;movlp   0x1c
         btfsc   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         incf    0x46, F                                     ; reg: 0x046
         movlb   0x00
@@ -11555,9 +11556,9 @@ function_089:                                               ; address: 0x2503
 label_799:                                                  ; address: 0x25a1
 
         fcall    function_076
-        movlp   0x25
+        ;movlp   0x25
         fcall    function_093
-        movlp   0x25
+        ;movlp   0x25
         subwf   0x2b, W                                     ; reg: 0x02b
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_800
@@ -11574,17 +11575,17 @@ label_800:                                                  ; address: 0x25aa
 label_801:                                                  ; address: 0x25ae
 
         fcall    function_092
-        movlp   0x25
+        ;movlp   0x25
         subwf   0x2a, W                                     ; reg: 0x02a
         movwf   0x5d                                        ; reg: 0x05d
         movf    (Common_RAM + 5), W                         ; reg: 0x075
         subwfb  0x2b, W                                     ; reg: 0x02b
         fcall    function_095
-        movlp   0x25
+        ;movlp   0x25
         fcall    function_090
-        movlp   0x25
+        ;movlp   0x25
         fcall    function_091
-        movlp   0x25
+        ;movlp   0x25
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_802
         movlw   0x00
@@ -11619,9 +11620,9 @@ label_804:                                                  ; address: 0x25cb
 label_805:                                                  ; address: 0x25cf
 
         fcall    function_094
-        movlp   0x25
+        ;movlp   0x25
         fcall    function_093
-        movlp   0x25
+        ;movlp   0x25
         subwf   0x2f, W                                     ; reg: 0x02f
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_806
@@ -11638,17 +11639,17 @@ label_806:                                                  ; address: 0x25d8
 label_807:                                                  ; address: 0x25dc
 
         fcall    function_092
-        movlp   0x25
+        ;movlp   0x25
         subwf   0x2e, W                                     ; reg: 0x02e
         movwf   0x5d                                        ; reg: 0x05d
         movf    (Common_RAM + 5), W                         ; reg: 0x075
         subwfb  0x2f, W                                     ; reg: 0x02f
         fcall    function_095
-        movlp   0x25
+        ;movlp   0x25
         fcall    function_090
-        movlp   0x25
+        ;movlp   0x25
         fcall    function_091
-        movlp   0x25
+        ;movlp   0x25
         btfss   STATUS,  0x2                                   ; reg: 0x003, bit: 2
         ljmp    label_808
         movlw   0x00
@@ -11847,7 +11848,7 @@ label_812:                                                  ; address: 0x2684
         ljmp    label_813
         movlb   0x01
         fcall    function_100
-        movlp   0x26
+        ;movlp   0x26
         movf    0x28, W                                     ; reg: 0x028
         movlb   0x02
         movwf   0x2d                                        ; reg: 0x12d
@@ -11861,7 +11862,7 @@ label_813:                                                  ; address: 0x2691
         ljmp    label_815
         movlb   0x01
         fcall    function_100
-        movlp   0x26
+        ;movlp   0x26
         movf    0x33, W                                     ; reg: 0x033
         movlb   0x02
         movwf   0x2d                                        ; reg: 0x12d
@@ -11884,7 +11885,7 @@ label_815:                                                  ; address: 0x26a0
         ljmp    label_817
         movlb   0x01
         fcall    function_100
-        movlp   0x26
+        ;movlp   0x26
         movf    0x35, W                                     ; reg: 0x035
         movlb   0x02
         movwf   0x2d                                        ; reg: 0x12d
@@ -11930,7 +11931,7 @@ label_817:                                                  ; address: 0x26c8
         ljmp    label_832
         movlb   0x01
         fcall    function_100
-        movlp   0x26
+        ;movlp   0x26
         movf    0x2a, W                                     ; reg: 0x02a
         movlb   0x02
         movwf   0x2d                                        ; reg: 0x12d
@@ -11951,7 +11952,7 @@ label_818:                                                  ; address: 0x26d6
         ljmp    label_819
         movlw   0x0a
         fcall    function_099
-        movlp   0x26
+        ;movlp   0x26
         movlb   0x02
         movf    0x30, W                                     ; reg: 0x130
         movlb   0x04
@@ -11974,7 +11975,7 @@ label_819:                                                  ; address: 0x26f0
         ljmp    label_820
         movlw   0x0a
         fcall    function_099
-        movlp   0x26
+        ;movlp   0x26
         ljmp    label_821
 
 label_820:                                                  ; address: 0x26f6
@@ -11985,7 +11986,7 @@ label_820:                                                  ; address: 0x26f6
         ljmp    label_822
         movlw   0x0a
         fcall    function_099
-        movlp   0x26
+        ;movlp   0x26
         movlw   0x64
 
 label_821:                                                  ; address: 0x26fe
@@ -12005,7 +12006,7 @@ label_822:                                                  ; address: 0x2704
         ljmp    label_825
         movlw   0x0a
         fcall    function_099
-        movlp   0x26
+        ;movlp   0x26
         movlb   0x00
         clrf    0x60                                        ; reg: 0x060
         clrf    0x5f                                        ; reg: 0x05f
@@ -12033,7 +12034,7 @@ label_823:                                                  ; address: 0x2712
         movlb   0x00
         movwf   0x61                                        ; reg: 0x061
         fcall    function_098
-        movlp   0x26
+        ;movlp   0x26
         movf    0x60, W                                     ; reg: 0x060
         movlb   0x04
         movwf   0x35                                        ; reg: 0x235
@@ -12053,7 +12054,7 @@ label_824:                                                  ; address: 0x2731
         movlb   0x04
         movwf   0x32                                        ; reg: 0x232
         fcall    function_097
-        movlp   0x26
+        ;movlp   0x26
         movf    0x2e, W                                     ; reg: 0x02e
         movlb   0x00
         movwf   0x58                                        ; reg: 0x058
@@ -13168,3 +13169,5 @@ function_100:                                               ; address: 0x27fa
 ;        db      0x00
 ;
 ;        end
+
+	END vector_reset
