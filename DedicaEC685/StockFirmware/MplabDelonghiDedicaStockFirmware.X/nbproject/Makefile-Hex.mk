@@ -13,8 +13,8 @@ ifeq "${IGNORE_LOCAL}" "TRUE"
 else
 include Makefile
 # Include makefile containing local settings
-ifeq "$(wildcard nbproject/Makefile-local-default.mk)" "nbproject/Makefile-local-default.mk"
-include nbproject/Makefile-local-default.mk
+ifeq "$(wildcard nbproject/Makefile-local-Hex.mk)" "nbproject/Makefile-local-Hex.mk"
+include nbproject/Makefile-local-Hex.mk
 endif
 endif
 
@@ -25,7 +25,7 @@ MV=mv
 CP=cp 
 
 # Macros
-CND_CONF=default
+CND_CONF=Hex
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 IMAGE_TYPE=debug
 OUTPUT_SUFFIX=hex
@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=../DedicaEC685_PIC16F1938_StockFirmware.S
+SOURCEFILES_QUOTED_IF_SPACED=
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/_ext/1472/DedicaEC685_PIC16F1938_StockFirmware.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/_ext/1472/DedicaEC685_PIC16F1938_StockFirmware.o.d
+OBJECTFILES_QUOTED_IF_SPACED=
+POSSIBLE_DEPFILES=
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/_ext/1472/DedicaEC685_PIC16F1938_StockFirmware.o
+OBJECTFILES=
 
 # Source Files
-SOURCEFILES=../DedicaEC685_PIC16F1938_StockFirmware.S
+SOURCEFILES=
 
 
 
@@ -82,30 +82,14 @@ FIXDEPS=fixDeps
 ifneq ($(INFORMATION_MESSAGE), )
 	@echo $(INFORMATION_MESSAGE)
 endif
-	${MAKE}  -f nbproject/Makefile-default.mk ${DISTDIR}/MplabDelonghiDedicaStockFirmware.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+	${MAKE}  -f nbproject/Makefile-Hex.mk ${DISTDIR}/MplabDelonghiDedicaStockFirmware.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 
 MP_PROCESSOR_OPTION=PIC16F1938
 FINAL_IMAGE_NAME_MINUS_EXTENSION=${DISTDIR}/MplabDelonghiDedicaStockFirmware.X.${IMAGE_TYPE}
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: pic-as-assembler
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/_ext/1472/DedicaEC685_PIC16F1938_StockFirmware.o: ../DedicaEC685_PIC16F1938_StockFirmware.S  nbproject/Makefile-${CND_CONF}.mk 
-	@${MKDIR} "${OBJECTDIR}/_ext/1472" 
-	@${RM} ${OBJECTDIR}/_ext/1472/DedicaEC685_PIC16F1938_StockFirmware.o 
-	${MP_AS} -mcpu=PIC16F1938 -c \
-	-o ${OBJECTDIR}/_ext/1472/DedicaEC685_PIC16F1938_StockFirmware.o \
-	../DedicaEC685_PIC16F1938_StockFirmware.S \
-	 -D__DEBUG=1   -mdfp="${DFP_DIR}/xc8"  -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -fmax-errors=20 -mwarn=0 -xassembler-with-cpp
-	
 else
-${OBJECTDIR}/_ext/1472/DedicaEC685_PIC16F1938_StockFirmware.o: ../DedicaEC685_PIC16F1938_StockFirmware.S  nbproject/Makefile-${CND_CONF}.mk 
-	@${MKDIR} "${OBJECTDIR}/_ext/1472" 
-	@${RM} ${OBJECTDIR}/_ext/1472/DedicaEC685_PIC16F1938_StockFirmware.o 
-	${MP_AS} -mcpu=PIC16F1938 -c \
-	-o ${OBJECTDIR}/_ext/1472/DedicaEC685_PIC16F1938_StockFirmware.o \
-	../DedicaEC685_PIC16F1938_StockFirmware.S \
-	  -mdfp="${DFP_DIR}/xc8"  -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -fmax-errors=20 -mwarn=0 -xassembler-with-cpp
-	
 endif
 
 # ------------------------------------------------------------------------------------
@@ -115,13 +99,13 @@ ${DISTDIR}/MplabDelonghiDedicaStockFirmware.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${
 	@${MKDIR} ${DISTDIR} 
 	${MP_LD} -mcpu=PIC16F1938 ${OBJECTFILES_QUOTED_IF_SPACED} \
 	-o ${DISTDIR}/MplabDelonghiDedicaStockFirmware.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX} \
-	 -D__DEBUG=1   -mdfp="${DFP_DIR}/xc8"  -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -Wl,-Wl,-ACODE=0h-3fffh -mcallgraph=std -Wl,-Map=${FINAL_IMAGE_NAME_MINUS_EXTENSION}.map -mno-download-hex
+	 -D__DEBUG=1   -mdfp="${DFP_DIR}/xc8"  -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -mcallgraph=std -Wl,-Map=${FINAL_IMAGE_NAME_MINUS_EXTENSION}.map -mno-download-hex
 else
 ${DISTDIR}/MplabDelonghiDedicaStockFirmware.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
 	@${MKDIR} ${DISTDIR} 
 	${MP_LD} -mcpu=PIC16F1938 ${OBJECTFILES_QUOTED_IF_SPACED} \
 	-o ${DISTDIR}/MplabDelonghiDedicaStockFirmware.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX} \
-	  -mdfp="${DFP_DIR}/xc8"  -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -Wl,-Wl,-ACODE=0h-3fffh -mcallgraph=std -Wl,-Map=${FINAL_IMAGE_NAME_MINUS_EXTENSION}.map -mno-download-hex
+	  -mdfp="${DFP_DIR}/xc8"  -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -mcallgraph=std -Wl,-Map=${FINAL_IMAGE_NAME_MINUS_EXTENSION}.map -mno-download-hex
 endif
 
 

@@ -13,8 +13,12 @@
             </sourceRootList>
             <confList>
                 <confElem>
-                    <name>default</name>
+                    <name>DisAssy</name>
                     <type>2</type>
+                </confElem>
+                <confElem>
+                    <name>Hex</name>
+                    <type>4</type>
                 </confElem>
             </confList>
             <formatting>
