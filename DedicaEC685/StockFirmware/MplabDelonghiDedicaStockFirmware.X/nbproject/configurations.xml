@@ -1178,7 +1178,7 @@
         <property key="linker-callgraph" value="std"/>
         <property key="linker-checksum" value=""/>
         <property key="linker-custom-options"
-                  value="-Wl,-ACODE=0h-3fffh,-presetVec=0h,-pinterruptVec=04h"/>
+                  value="-Wl,-presetVec=0h,-pinterruptVec=04h,-pCODE=0fh"/>
         <property key="linker-fill" value=""/>
         <property key="linker-format-hex-file-for-download" value="false"/>
         <property key="linker-libraries" value=""/>

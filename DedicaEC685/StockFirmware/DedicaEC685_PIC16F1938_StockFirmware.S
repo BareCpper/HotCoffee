@@ -8,7 +8,7 @@
 
         CONFIG  FOSC     = INTOSC
         CONFIG  WDTE     = ON
-        CONFIG  PWRTE    = ON
+        CONFIG  PWRTE    = OFF ;ON
         CONFIG  MCLRE    = ON
         CONFIG  CP       = OFF
         CONFIG  CPD      = OFF
@@ -41,21 +41,21 @@ PSECT   resetVec,class=CODE,delta=2
 org     0x0                                ; address: 0x0000
 vector_reset:                                               ; address: 0x0000
 
-        ;movlp   0x00
-        ljmp    label_004
+        pagesel   label_004
+        goto    label_004
 
 
 PSECT   interruptVec,class=CODE,delta=2
 global vector_reset
 vector_int:                                                 ; address: 0x0004
 
-        ;movlp   0x00
+        pagesel   label_002
         btfsc   T0IF                                ; reg: 0x00b, bit: 2
         btfss   T0IE                                ; reg: 0x00b, bit: 5
-        ljmp    label_002
-        ;movlp   0x07
-        fcall    function_018
-        retfie
+        goto    label_002
+        pagesel function_018
+	pcall   function_018
+	retfie
 
 psect	code
 label_002:                                                  ; address: 0x000b
