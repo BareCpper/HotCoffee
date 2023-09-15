@@ -33,6 +33,12 @@ CPMAddPackage(
   OPTIONS "FMT_INSTALL YES" # create an installable target
 )
 
+CPMAddPackage(
+  NAME sdk-nrf
+  GIT_TAG v2.1.4
+  GITHUB_REPOSITORY sdk-nrf
+  OPTIONS "FMT_INSTALL YES" # create an installable target
+)
 # ---- Add source files ----
 
 # Note: globbing sources is considered bad practice as CMake's generators may not detect new files
