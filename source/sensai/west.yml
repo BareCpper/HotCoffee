@@ -1,0 +1,13 @@
+manifest:
+  remotes:
+    - name: ncs
+      url-base: https://github.com/nrfconnect
+  projects:
+    - name: sdk-nrf
+      remote: ncs
+      path: nrf
+      revision: v2.4.1
+      import: true
+      clone-depth: 1
+  self:
+    path: sensai
